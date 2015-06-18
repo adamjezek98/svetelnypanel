@@ -28,7 +28,7 @@ matrix = [  [green,  green,  green,  blue,  green,  pink,  pink,  blue,  blue,  
             [red,  pink,  green,  blue,  white,  blue,  white,  white,  white,  green,  pink,  blue,  pink,  pink,  pink],  
             [green,  green,  red,  blue,  green,  blue,  white,  white,  blue,  red,  white,  green,  white,  red,  red],  
             [blue,  green,  green,  white,  green,  red,  pink,  red,  green,  blue,  green,  pink,  white,  red,  red] ]
-
+matrix = [[black for _ in range(15)] for __ in range(9)]
 size = (float(width)-((len(matrix[0])-1.0)*space))/len(matrix[0])
 panelheight = size*len(matrix)+(len(matrix)-2)*space
 
