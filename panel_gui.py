@@ -30,7 +30,7 @@ matrix = [  [green,  green,  green,  blue,  green,  pink,  pink,  blue,  blue,  
             [blue,  green,  green,  white,  green,  red,  pink,  red,  green,  blue,  green,  pink,  white,  red,  red] ]
 
 size = (float(width)-((len(matrix[0])-1.0)*space))/len(matrix[0])
-
+panelheight = size*len(matrix)+(len(matrix)-2)*space
 
 def drawOnScreen():
     for x in range(len(matrix[0])):
@@ -51,8 +51,12 @@ def drawPalette():
 
 def countWarp(inx, iny, outx, outy, x, y):
     destx = x/(float(inx)/outx)
+    desty = y/(float(iny)/outy)
 
-    return int((destx))
+    return int(destx), int(desty)
+
+def drawPixel(pos):
+    matrix[pos[1]][pos[0]] = selectedcolor
 
 drawOnScreen()
 drawPalette()
@@ -60,13 +64,19 @@ drawPalette()
 while 1:
     ev = pygame.event.get()
     for event in ev:
-            if event.type == pygame.MOUSEBUTTONUP:
-                    pos = pygame.mouse.get_pos()
-                    print pos
-                    if pos[1] >= height-10:
-                        col = countWarp(width, 0, len(colors), 0, pos[0], 0)
-                        selectedcolor = colors[col]
-                    #if pos[0] <= 
+        if event.type == pygame.QUIT:
+            pygame.quit(); sys.exit();
+        if event.type == pygame.MOUSEBUTTONUP:
+            pos = pygame.mouse.get_pos()                   
+            if pos[1] >= height-10:
+                col = countWarp(width, -1, len(colors), -1, pos[0], -1)[0]
+                selectedcolor = colors[col]
+                
+            if pos[1] <= panelheight:                        
+                click = countWarp(width, panelheight, len(matrix[0]), len(matrix), pos[0], pos[1])
+                drawPixel(click)
+                drawOnScreen()
+                
 
 
 
