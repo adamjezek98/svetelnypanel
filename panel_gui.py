@@ -8,14 +8,16 @@ darkBlue = (0,0,128)
 white = (255,255,255)
 black = (0,0,0)
 pink = (255,200,200)
+grey = (133,133,133)
 
+colors = [red, green, blue, darkBlue, white, black, pink]
 height = 500
 width = 480
-
+selectedcolor = colors[0]
 screen = pygame.display.set_mode((width, height))
+screen.fill(grey)
 
-margin = 10
-space = 2
+space = 5.0
 
 matrix = [  [green,  green,  green,  blue,  green,  pink,  pink,  blue,  blue,  green,  white,  pink,  red,  blue,  white],  
             [pink,  red,  green,  white,  green,  red,  green,  white,  red,  green,  pink,  white,  red,  green,  red],  
@@ -27,24 +29,44 @@ matrix = [  [green,  green,  green,  blue,  green,  pink,  pink,  blue,  blue,  
             [green,  green,  red,  blue,  green,  blue,  white,  white,  blue,  red,  white,  green,  white,  red,  red],  
             [blue,  green,  green,  white,  green,  red,  pink,  red,  green,  blue,  green,  pink,  white,  red,  red] ]
 
-size = (width-(2*margin + (len(matrix[0])-1)*space))/len(matrix[0])
+size = (float(width)-((len(matrix[0])-1.0)*space))/len(matrix[0])
 
 
 def drawOnScreen():
     for x in range(len(matrix[0])):
         for y in range(len(matrix)):
-            scrx =margin+x*space+x*size
-            scry =margin+y*size+y*space
+            scrx =x*space+x*size
+            scry =y*size+y*space
             pygame.draw.rect(screen, matrix[y][x], (scrx,scry, size, size), 0 )
         
     pygame.display.update()        
 
+def drawPalette():
+    count = len(colors)
+    pixsize = float(width/count)
+    for i in range(count):
+        pygame.draw.rect(screen, colors[i], (i*pixsize, height-15, pixsize, pixsize), 0)
+    pygame.display.update()
+    
 
-import time
-cas = int(round(time.time() * 1000))
+def countWarp(inx, iny, outx, outy, x, y):
+    destx = x/(float(inx)/outx)
+
+    return int((destx))
+
 drawOnScreen()
-print int(round(time.time() * 1000)) - cas
+drawPalette()
 
+while 1:
+    ev = pygame.event.get()
+    for event in ev:
+            if event.type == pygame.MOUSEBUTTONUP:
+                    pos = pygame.mouse.get_pos()
+                    print pos
+                    if pos[1] >= height-10:
+                        col = countWarp(width, 0, len(colors), 0, pos[0], 0)
+                        selectedcolor = colors[col]
+                    #if pos[0] <= 
 
 
 
