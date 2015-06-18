@@ -47,7 +47,8 @@ class fallgame():
         self.show()
 
 
-
+    def play(self):
+	
 
 
 
