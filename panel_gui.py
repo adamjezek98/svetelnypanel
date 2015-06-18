@@ -57,6 +57,13 @@ def countWarp(inx, iny, outx, outy, x, y):
 
 def drawPixel(pos):
     matrix[pos[1]][pos[0]] = selectedcolor
+    color = ""
+    for col in selectedcolor:
+        res = hex(col).split("x")[1]
+        if len(res) == 1:
+            res = "0" + res
+        color += res
+    print color
 
 drawOnScreen()
 drawPalette()
