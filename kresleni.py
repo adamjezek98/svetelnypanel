@@ -129,6 +129,27 @@ class kresleni():
 	    cord = wi.state["ir_src"][0]
 	    if cord == None:
 		return
-	
+
+    def savedrawing(self, name):
+	stringtosave = ""
+	for line in self.matrix:
+	    for item in line:
+		stringtosave += item + " "
+	    stringtosave += "\n"
+	stringtosave = stringtosave.rstrip()
+	filetosave = open(name+"-paneldrawing.txt", "w+")
+	filetosave.write(stringtosave)
+	filetosave.close()
+
+
+    def loaddrawing(self, name):
+	filetoload = open(name+"-paneldrawing.txt", "r")
+	read = filetoload.read()
+	filetoload.close()
+	newmatrix = []
+	for i in read.split("\n"):
+	    newmatrix.append(i.rstrip().split(" "))
+	self.matrix = newmatrix
+	sp.set_panel_memory_from_matrix(self.matrix)
 	
 kr = kresleni()
