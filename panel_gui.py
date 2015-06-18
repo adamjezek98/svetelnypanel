@@ -1,4 +1,5 @@
 import sys, pygame
+import xmlrpclib
 pygame.init()
 
 red = (255,0,0)
@@ -55,6 +56,7 @@ def countWarp(inx, iny, outx, outy, x, y):
 
     return int(destx), int(desty)
 
+server = xmlrpclib.ServerProxy("http://172.16.34.157:1776")
 def drawPixel(pos):
     matrix[pos[1]][pos[0]] = selectedcolor
     color = ""
@@ -63,7 +65,8 @@ def drawPixel(pos):
         if len(res) == 1:
             res = "0" + res
         color += res
-    print color
+    server.set_pixel_color(server.matrix(pos[0],pos[1]), color)
+    #print color
 
 drawOnScreen()
 drawPalette()
